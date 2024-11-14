@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .primary-btn{
+    @apply bg-primary text-white font-bold px-4 py-2 rounded-full
+  }
+}
