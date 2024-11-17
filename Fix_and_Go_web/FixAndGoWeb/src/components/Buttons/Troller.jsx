@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../../Images/Image.png';
+import TS from '../../Images/TS.png';
 
 const Troller = () => {
   return (
@@ -31,7 +31,7 @@ const Troller = () => {
 
    
     <div className='flex items-center justify-center'>
-      <img src={Image} alt='Home Image' className='w-85 h-auto' />
+      <img src={TS} alt='Home Image' className='max-w-[80%] md:max-w-[40%] lg:max-w-[30%] max-h-[40vh] object-contain' />
     </div> 
     
   </div>

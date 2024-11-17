@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from '../../Images/Image.png';
+import RS from '../../Images/RS.png';
 
 const RentalOwner = () => {
   return (
@@ -31,7 +31,7 @@ const RentalOwner = () => {
 
      
       <div className='flex items-center justify-center'>
-        <img src={Image} alt='Home Image' className='w-85 h-auto' />
+        <img src={RS} alt='Rental service image Image' className='max-w-[80%] md:max-w-[40%] lg:max-w-[30%] max-h-[40vh] object-contain' />
       </div> 
       
     </div>

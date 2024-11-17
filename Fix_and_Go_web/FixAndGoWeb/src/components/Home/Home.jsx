@@ -10,7 +10,7 @@ const Home = () => {
             
                 <div className='flex flex-col justify-center gap-5 text-center md:text-left pt-24 md:p-0 pb-10'>
                 <h1 className='text-6xl font-semibold text-white' >FIX <span className='text-8xl text-black'>&</span> GO</h1>
-                <p className='font-semibold'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio voluptas ipsa commodi, dignissimos iste dicta molestiae blanditiis eaque voluptatibus modi maiores ad quis. Iste totam eos excepturi in expedita vitae.</p>
+                <p className='font-semibold'>"Reliable vehicle breakdown assistance at your fingertips—connect, repair, and keep moving with Fix & Go."</p>
                 <div className='flex gap-4 items-center md:justify-start justify-center'>
                     <button className='primary-btn'>Download</button>
                 </div>
