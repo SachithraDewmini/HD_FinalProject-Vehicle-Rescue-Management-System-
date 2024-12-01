@@ -18,9 +18,11 @@ const RentalOwner = () => {
 
       
       <div className='container text-center md:text-left mb-8'>
-        <p className='font-semibold'>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio voluptas ipsa commodi, dignissimos iste dicta molestiae blanditiis eaque voluptatibus modi maiores ad quis. Iste totam eos excepturi in expedita vitae.
-        </p>
+        <p className='font-semibold'>Short-Term and Long-Term Rentals – Availability of vehicles </p>
+        <p className='font-semibold'>Driver Assistance – Option for rentals with professional drivers</p>
+        <p className='font-semibold'>Flexible Pickup and Drop-off – Convenient vehicle collection and return options.</p>
+        <p className='font-semibold'>4.	Customer Messaging – Direct communication with customers to confirm bookings</p>
+
         <div className='flex gap-2 items-center md:justify-start justify-center h-40'>
                     <button className='primary-btn' >
                     
