@@ -18,9 +18,12 @@ const Troller = () => {
 
     
     <div className='container text-center md:text-left mb-8'>
-      <p className='font-semibold'>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio voluptas ipsa commodi, dignissimos iste dicta molestiae blanditiis eaque voluptatibus modi maiores ad quis. Iste totam eos excepturi in expedita vitae.
-      </p>
+      <p className='font-semibold'>Emergency Towing – Immediate assistance for vehicle breakdowns or accidents</p>
+      <p className='font-semibold'>Flatbed Towing – Safe transport of vehicles requiring flatbeds.</p>
+      <p className='font-semibold'>Long-Distance Towing – Transporting vehicles across cities or regions.</p>
+      <p className='font-semibold'>Specialized Towing – Handling bikes, trucks, and heavy vehicles.</p>
+      <p className='font-semibold'>Accident Recovery Services – Clearing and transporting vehicles from accident sites.</p>
+      <p className='font-semibold'>Customer Messaging – Communication with customers about towing needs.</p>
       <div className='flex gap-2 items-center md:justify-start justify-center h-40'>
                   <button className='primary-btn' >
                   
