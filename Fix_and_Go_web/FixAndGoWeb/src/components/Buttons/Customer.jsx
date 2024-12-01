@@ -18,9 +18,7 @@ const Customer = () => {
 
       {/* Content Section */}
       <div className='container text-center md:text-left my-8'>
-       <p className='font-semibold mb-8'>
-        Vehicle Repair and Maintenance – Fixing engine issues, brake problems, and general mechanical repairs.
-        </p>
+       <p className='font-semibold mb-8'>Vehicle Repair and Maintenance – Fixing engine issues, brake problems, and general mechanical repairs.</p>
         <p className='font-semibold mb-8'>On-Location Repairs – Providing minor repairs at the breakdown site</p>
         <p className='font-semibold mb-8'>Spare Parts Installation – Supplying and installing replacement parts.</p>
         <p className='font-semibold mb-8'>Diagnostic Services – Identifying problems using advanced diagnostic tools</p>
