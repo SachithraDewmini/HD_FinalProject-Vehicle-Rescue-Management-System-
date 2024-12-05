@@ -85,6 +85,7 @@ Run the Application:!
 📌 Conclusion
 - The Vehicle Rescue Management System aims to enhance the roadside assistance experience through a user-centered, feature-rich platform. By integrating real-time data on nearby services and continuous journey options, this application is a reliable and innovative solution for vehicle emergencies. 🌟
 
+Web Application Screenshots : 
 
 
 
@@ -113,4 +114,36 @@ Run the Application:!
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-11-17 101027](https://github.com/user-attachments/assets/ee19ea9f-4355-43e2-acb0-9da331e6318d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-11-17 101051](https://github.com/user-attachments/assets/5e82beaa-5704-46cd-88c2-bc9be9b17004)
 
