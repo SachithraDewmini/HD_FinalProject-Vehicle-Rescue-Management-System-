@@ -77,15 +77,13 @@ Install Dependencies:
 Copy code
 npm install
 
-Run the Application:![Screenshot 2024-11-17 100318](https://github.com/user-attachments/assets/26e6c8e2-704c-4de4-8dec-f28ba045f638)
-
+Run the Application:!
 
 - Web App: npm start
 - Mobile App: Open in Android Studio or run via react-native run-android.
 
 📌 Conclusion
 - The Vehicle Rescue Management System aims to enhance the roadside assistance experience through a user-centered, feature-rich platform. By integrating real-time data on nearby services and continuous journey options, this application is a reliable and innovative solution for vehicle emergencies. 🌟
-
 
 
 
