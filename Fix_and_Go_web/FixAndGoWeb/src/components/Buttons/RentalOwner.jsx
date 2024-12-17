@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import RS from '../../Images/RS.png';
 
 const RentalOwner = () => {
@@ -24,10 +25,13 @@ const RentalOwner = () => {
         <p className='font-semibold'>- Customer Messaging – Direct communication with customers to confirm bookings</p>
 
         <div className='flex gap-2 items-center md:justify-start justify-center h-40'>
-                    <button className='primary-btn' >
-                    
-                        Download App
-                        </button>
+                    <button className='primary-btn'><Link to="/userLogin">
+                                                      Login
+                                                  </Link></button>
+                              <button className='primary-btn'>
+                                                  <Link to="/userRegiser">
+                                                      Register
+                                                  </Link></button>
                 </div>
       </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TS from '../../Images/TS.png';
 
 const Troller = () => {
@@ -25,11 +26,14 @@ const Troller = () => {
       <p className='font-semibold'>Accident Recovery Services – Clearing and transporting vehicles from accident sites.</p>
       <p className='font-semibold'>Customer Messaging – Communication with customers about towing needs.</p>
       <div className='flex gap-2 items-center md:justify-start justify-center h-40'>
-                  <button className='primary-btn' >
-                  
-                      Download App
-                      </button>
-              </div>
+                          <button className='primary-btn'><Link to="/userLogin">
+                                                            Login
+                                                        </Link></button>
+                                    <button className='primary-btn'>
+                                                        <Link to="/userRegiser">
+                                                            Register
+                                                        </Link></button>
+                      </div>
     </div>
 
    

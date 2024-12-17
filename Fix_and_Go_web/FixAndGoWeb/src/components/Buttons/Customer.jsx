@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CS from '../../Images/CS.png';
 
 const Customer = () => {
@@ -26,7 +27,13 @@ const Customer = () => {
         <p className='font-semibold mb-8'>-  Customer Messaging – Direct communication with customers through the system</p>
         <p className='font-semibold mb-8'>-  Feedback Analysis – Reviewing customer ratings to improve service quality</p>
         <div className='flex gap-2 items-center md:justify-start justify-center'>
-          <button className='primary-btn'>Download App</button>
+          <button className='primary-btn'><Link to="/userLogin">
+                                                                      Login
+                                                                  </Link></button>
+                                              <button className='primary-btn'>
+                                                                  <Link to="/userRegiser">
+                                                                      Register
+                                                                  </Link></button>
         </div>
       </div>
 

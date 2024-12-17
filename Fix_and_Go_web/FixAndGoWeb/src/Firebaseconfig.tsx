@@ -1,8 +1,8 @@
-// Import necessary Firebase modules
-import { getAnalytics } from "firebase/analytics";
+// src/firebaseconfig.tsx
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -17,11 +17,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-// Export Firestore and Authentication modules for use in other files
-const db = getFirestore(app); // Firestore for database interactions
-const auth = getAuth(app);    // Authentication module
-
-export { analytics, app, auth, db };
-
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app)
