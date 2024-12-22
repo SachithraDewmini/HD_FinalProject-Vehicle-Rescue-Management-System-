@@ -111,20 +111,25 @@ const MechanicEdit: React.FC = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
-        >
-          Update Details
-        </button>
+       
+        <div className="mt-6 space-y-4">
+          <button
+            type="submit"
+            className="w-full bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          >
+            Update Details
+          </button>
+
+          {/* Back Button */}
+          <button
+            type="button"
+            onClick={() => navigate("/mview")}
+            className="w-full bg-gray-400 text-white py-3 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          >
+            Back
+          </button>
+</div>
+
       </form>
     </div>
   );
