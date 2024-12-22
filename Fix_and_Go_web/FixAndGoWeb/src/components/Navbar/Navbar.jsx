@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AdminLog from '../../Images/AdminLog.png';
 import FixAndGo from '../../Images/FixAndGoLogo.png';
+import logout from '../../Images/logout.png';
 
 const Navbar = () => {
   return (
@@ -10,7 +11,9 @@ const Navbar = () => {
         {/* Logo Section */}
         <div className='flex items-center'>
           <img src={FixAndGo} alt='Fix & Go logo' className='w-14' />
-          <p className='text-3xl font-semibold text-white'>FIX<span className='text-6xl'>&</span>GO</p>
+          <p className='text-3xl font-semibold text-white'>
+            FIX<span className='text-6xl'> & </span>GO
+          </p>
         </div>
 
         {/* Menu Section */}
@@ -34,11 +37,15 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Login Section */}
-        
-        <div>
-        <Link to="/login">
-          <img src={AdminLog} alt='Admin log' className='w-11 rounded-full' />
+        {/* Login & Logout Section */}
+        <div className='flex items-center gap-4'>
+          {/* Login Icon */}
+          <Link to="/userLogin">
+            <img src={AdminLog} alt='Admin login icon' className='w-11 rounded-full' />
+          </Link>
+          {/* Logout Icon */}
+          <Link to="/logout">
+            <img src={logout} alt='Logout icon' className='w-11 rounded-full' />
           </Link>
         </div>
       </div>

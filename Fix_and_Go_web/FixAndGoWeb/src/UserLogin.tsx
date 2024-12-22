@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs"; // Import bcryptjs
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,45 +15,58 @@ const UserLogin: React.FC = () => {
     setError("");
 
     try {
-      // Firestore query to check if the user exists
-      const usersRef = collection(db, "users");
-      const q = query(
-        usersRef,
-        where("email", "==", email),
-        where("password", "==", password) // Not secure in production
-      );
-      const snapshot = await getDocs(q);
+      // Step 1: Check Admin table
+      const adminRef = collection(db, "Admin");
+      const adminQuery = query(adminRef, where("email", "==", email));
+      const adminSnapshot = await getDocs(adminQuery);
 
-      if (!snapshot.empty) {
-        const userDoc = snapshot.docs[0];
+      if (!adminSnapshot.empty) {
+        // If user is an admin, navigate to the admin dashboard
+        navigate("/admindash");
+        return;
+      }
+
+      // Step 2: Check Users table
+      const usersRef = collection(db, "users");
+      const userQuery = query(usersRef, where("email", "==", email));
+      const userSnapshot = await getDocs(userQuery);
+
+      if (!userSnapshot.empty) {
+        const userDoc = userSnapshot.docs[0];
         const userData = userDoc.data();
 
         const userId = userData.userId;
-        const role = userData.role; // Assuming you have a 'role' field in Firestore
+        const name = userData.name; // Assuming there is a 'name' field in Firestore
+        const role = userData.role; // Assuming there is a 'role' field in Firestore
+        const storedPassword = userData.password; // Get the stored hashed password from Firestore
 
-        if (userId && role) {
-          // Store userId in localStorage
+        // Step 3: Compare entered password with hashed password in Firestore
+        const passwordMatch = await bcrypt.compare(password, storedPassword);
+
+        if (passwordMatch) {
+          // If password matches, proceed to the respective page
           localStorage.setItem("userId", userId);
+          localStorage.setItem("name", name);
 
           // Navigate based on the user's role
           switch (role) {
             case "Mechanic":
-              navigate("/mview"); // Mechanic page
+              navigate("/mview", { state: { userId, name } }); // Mechanic page
               break;
-              case "Customer":
-                navigate("/cview"); // Rental owner page
-                break;
+            case "Customer":
+              navigate("/cview", { state: { userId, name } }); // Customer page
+              break;
             case "Rental Owner":
-              navigate("/rview"); // Rental owner page
+              navigate("/rview", { state: { userId, name } }); // Rental owner page
               break;
             case "Troller":
-              navigate("/tview"); // Troller page
+              navigate("/tview", { state: { userId, name } }); // Troller page
               break;
             default:
               setError("Invalid role assigned. Please contact support.");
           }
         } else {
-          setError("User role or ID not found. Please contact support.");
+          setError("Incorrect email or password.");
         }
       } else {
         setError("Incorrect email or password.");
@@ -61,6 +75,11 @@ const UserLogin: React.FC = () => {
       console.error("Error logging in:", err);
       setError("An error occurred. Please try again.");
     }
+  };
+
+  // Function to navigate to the registration page
+  const handleRegister = () => {
+    navigate("/userRegiser");
   };
 
   return (
@@ -100,6 +119,16 @@ const UserLogin: React.FC = () => {
             Login
           </button>
         </form>
+
+        {/* Register Button */}
+        <div className="text-center mt-4">
+          <button
+            onClick={handleRegister}
+            className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition duration-200"
+          >
+            Register
+          </button>
+        </div>
       </div>
     </div>
   );

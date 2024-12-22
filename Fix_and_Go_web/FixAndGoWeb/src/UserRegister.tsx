@@ -1,5 +1,7 @@
+import bcrypt from "bcryptjs"; // Import bcryptjs
 import { addDoc, collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import { db } from "./Firebaseconfig"; // Update the path if needed
 
 const UserRegister: React.FC = () => {
@@ -11,6 +13,9 @@ const UserRegister: React.FC = () => {
   const [error, setError] = useState("");
 
   const roles = ["Mechanic", "Customer", "Rental Owner", "Troller"]; // Roles dropdown options
+
+  // Using useNavigate for navigation
+  const navigate = useNavigate();
 
   // Form Validation
   const validateForm = () => {
@@ -43,6 +48,9 @@ const UserRegister: React.FC = () => {
     }
 
     try {
+      // Hash the password using bcryptjs
+      const hashedPassword = await bcrypt.hash(password, 10); // The "10" is the salt rounds
+
       // Get the current max userId from Firestore
       const usersRef = collection(db, "users");
       const q = query(usersRef, orderBy("userId", "desc"), limit(1));
@@ -55,13 +63,13 @@ const UserRegister: React.FC = () => {
 
       const newUserId = maxUserId + 1; // Increment userId
 
-      // Add user to Firestore
+      // Add user to Firestore with the hashed password
       await addDoc(usersRef, {
         userId: newUserId,
         name,
         email,
         role,
-        password, // In real-world apps, never store raw passwords; use hashing
+        password: hashedPassword, // Store the hashed password
       });
 
       alert("User registered successfully!");
@@ -77,45 +85,52 @@ const UserRegister: React.FC = () => {
     }
   };
 
+  // Handle Login Button Click
+  const handleLoginRedirect = () => {
+    navigate("/userLogin"); // Navigate to /userLogin route
+  };
+
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
-      <h2>User Registration</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">User Registration</h2>
+      
+      {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+      
       <form onSubmit={handleRegister}>
         {/* Name */}
-        <div style={{ marginBottom: "10px" }}>
-          <label>Name:</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
             required
-            style={{ width: "100%", padding: "8px", margin: "5px 0" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
 
         {/* Email */}
-        <div style={{ marginBottom: "10px" }}>
-          <label>Email:</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             required
-            style={{ width: "100%", padding: "8px", margin: "5px 0" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
 
         {/* Role */}
-        <div style={{ marginBottom: "10px" }}>
-          <label>Role:</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value)}
             required
-            style={{ width: "100%", padding: "8px", margin: "5px 0" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           >
             <option value="">Select a role</option>
             {roles.map((r, index) => (
@@ -127,47 +142,51 @@ const UserRegister: React.FC = () => {
         </div>
 
         {/* Password */}
-        <div style={{ marginBottom: "10px" }}>
-          <label>Password:</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
             required
-            style={{ width: "100%", padding: "8px", margin: "5px 0" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
 
         {/* Confirm Password */}
-        <div style={{ marginBottom: "10px" }}>
-          <label>Confirm Password:</label>
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm your password"
             required
-            style={{ width: "100%", padding: "8px", margin: "5px 0" }}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007BFF",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
+          className="w-full p-3 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
         >
           Register
         </button>
       </form>
+
+      {/* Login Button */}
+      <div className="mt-4 text-center">
+        <p>Already have an account? 
+          <button
+            onClick={handleLoginRedirect}
+            className="mt-2 p-3 font-semibold rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          >
+            Login
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

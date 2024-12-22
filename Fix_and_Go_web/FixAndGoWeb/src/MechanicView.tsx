@@ -5,15 +5,20 @@ import { db } from "./Firebaseconfig";
 
 const MechanicView: React.FC = () => {
   const [mechanics, setMechanics] = useState<any[]>([]);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     const fetchMechanics = async () => {
       try {
         const userId = localStorage.getItem("userId");
+        const name = localStorage.getItem("name");
+
         if (!userId) {
           console.error("No user ID found in local storage.");
           return;
         }
+
+        setUserName(name || ""); // Set the user's name from localStorage
 
         const mechanicsRef = collection(db, "mechanic");
         const q = query(mechanicsRef, where("userId", "==", userId));
@@ -47,8 +52,21 @@ const MechanicView: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Display the user's name */}
+      {userName && (
+        <h2 className="text-xl font-bold mb-4">
+          Welcome, {userName}!
+        </h2>
+      )}
+
       <button className="primary-btn mb-4">
-        <Link to="/madd" state={{ userId: localStorage.getItem("userId") }}>
+        <Link
+          to="/madd"
+          state={{
+            userId: localStorage.getItem("userId"),
+            name: localStorage.getItem("name"),
+          }}
+        >
           Add Mechanic
         </Link>
       </button>
@@ -59,7 +77,7 @@ const MechanicView: React.FC = () => {
             <img
               src={mechanic.image}
               alt={mechanic.serviceName}
-              className="w-full h-48 object-cover rounded-t-lg" // Ensure image fills space and maintains aspect ratio
+              className="w-full h-48 object-cover rounded-t-lg"
             />
             <div className="p-4">
               <h3 className="text-xl font-semibold">{mechanic.serviceName}</h3>
@@ -78,7 +96,13 @@ const MechanicView: React.FC = () => {
               </p>
               <div className="mt-4 flex space-x-4">
                 <button className="primary-btn bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
-                  <Link to="/medit" state={{ mechanic }}>
+                  <Link
+                    to="/medit"
+                    state={{
+                      mechanic,
+                      userId: localStorage.getItem("userId")
+                    }}
+                  >
                     Edit
                   </Link>
                 </button>
@@ -87,6 +111,16 @@ const MechanicView: React.FC = () => {
                   onClick={() => handleDelete(mechanic.id)} // Pass mechanic id to delete
                 >
                   Delete
+                </button>
+                <button className="primary-btn bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600">
+                  <Link
+                    to="/mfeed"
+                    state={{
+                      mechanicid: mechanic.id, // Pass mechanic ID to view feedback
+                    }}
+                  >
+                    View Feedback
+                  </Link>
                 </button>
               </div>
             </div>

@@ -6,54 +6,84 @@ import { db } from "./Firebaseconfig";
 const RentalOwnerAdd: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = location.state?.userId || localStorage.getItem("userId"); // Retrieve userId
 
-  const [serviceName, setServiceName] = useState("");
-  const [vehiclebrandName, setVehiclebrandName] = useState("");
-  const [noOfsheets, setNoOfsheets, ] = useState("");
-  const [condition, setCondition, ] = useState("");
-  const [value, setValue, ] = useState("");
-  const [locationName, setLocationName] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [vehicleType, setVehicleType] = useState<string>(""); // Changed to string
-  const [availability, setAvailability] = useState("available");
-  const [image, setImage] = useState<File | null>(null);
+  // Retrieve userId and name from location state or localStorage
+  const userId = location.state?.userId || localStorage.getItem("userId") || "";
+  const name = location.state?.name || localStorage.getItem("name") || "";
 
+  const [serviceName, setServiceName] = useState<string>("");
+  const [vehicleBrandName, setVehicleBrandName] = useState<string>("");
+  const [noOfSeats, setNoOfSeats] = useState<string>("");
+  const [condition, setCondition] = useState<string>("");
+  const [value, setValue] = useState<string>("");
+  const [locationName, setLocationName] = useState<string>("");
+  const [contactNumber, setContactNumber] = useState<string>("");
+  const [vehicleType, setVehicleType] = useState<string>("");
+  const [availability, setAvailability] = useState<string>("available");
+  const [images, setImages] = useState<File[]>([]); // Updated state to handle multiple images
+
+  // Handle image upload (multiple images)
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImage(e.target.files[0]);
+      const selectedFiles = Array.from(e.target.files);
+      // Limit to 5 images
+      if (selectedFiles.length + images.length > 5) {
+        alert("You can only upload up to 5 images.");
+      } else {
+        setImages((prevImages) => [...prevImages, ...selectedFiles]);
+      }
     }
   };
 
+  // Remove an image
+  const handleImageRemove = (index: number) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!serviceName || !vehiclebrandName || !noOfsheets || !condition || !value ||  !locationName || !contactNumber || !vehicleType || !userId) {
+    // Validate required fields
+    if (
+      !serviceName ||
+      !vehicleBrandName ||
+      !noOfSeats ||
+      !condition ||
+      !value ||
+      !locationName ||
+      !contactNumber ||
+      !vehicleType
+    ) {
       alert("Please fill in all required fields.");
       return;
     }
 
     try {
-      const rentalownerData = {
+      // Prepare data to save
+      const rentalOwnerData = {
         serviceName,
-        vehiclebrandName,
-        noOfsheets, 
+        vehicleBrandName,
+        noOfSeats,
         condition,
         value,
         location: locationName,
         contactNumber,
-        vehicleType, // Now a single string from dropdown
+        vehicleType,
         availability,
-        image: image ? URL.createObjectURL(image) : null,
-        userId, // Ensure userId is saved
+        images: images.map((image) => URL.createObjectURL(image)), // Store temporary local URLs for images
+        userId,
+        userName: name,
       };
 
-      await addDoc(collection(db, "rentalowner"), rentalownerData);
+      // Save data to Firestore
+      await addDoc(collection(db, "rentalowner"), rentalOwnerData);
+
       alert("Rental Owner added successfully!");
-      navigate("/rview");
+      navigate("/rview"); // Redirect to the rental owner view page
     } catch (error) {
-      console.error("Error adding rentalowner:", error);
-      alert("Failed to add rentalowner. Please try again.");
+      console.error("Error adding rental owner:", error);
+      alert("Failed to add rental owner. Please try again.");
     }
   };
 
@@ -96,28 +126,28 @@ const RentalOwnerAdd: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="vehiclebrandName" className="block text-lg text-gray-700">
-          Vehicle Brand
+          <label htmlFor="vehicleBrandName" className="block text-lg text-gray-700">
+            Vehicle Brand
           </label>
           <input
             type="text"
-            id="vehiclebrandName"
-            value={vehiclebrandName}
-            onChange={(e) => setVehiclebrandName(e.target.value)}
+            id="vehicleBrandName"
+            value={vehicleBrandName}
+            onChange={(e) => setVehicleBrandName(e.target.value)}
             className="w-full mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
             required
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="noOfsheets" className="block text-lg text-gray-700">
-          Number Of Sheets
+          <label htmlFor="noOfSeats" className="block text-lg text-gray-700">
+            Number of Seats
           </label>
           <input
             type="text"
-            id="noOfsheets"
-            value={noOfsheets}
-            onChange={(e) => setNoOfsheets(e.target.value)}
+            id="noOfSeats"
+            value={noOfSeats}
+            onChange={(e) => setNoOfSeats(e.target.value)}
             className="w-full mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
             required
           />
@@ -125,7 +155,7 @@ const RentalOwnerAdd: React.FC = () => {
 
         <div className="mb-4">
           <label htmlFor="condition" className="block text-lg text-gray-700">
-          Condition
+            Condition
           </label>
           <input
             type="text"
@@ -193,7 +223,7 @@ const RentalOwnerAdd: React.FC = () => {
 
         <div className="mb-4">
           <label htmlFor="value" className="block text-lg text-gray-700">
-          Value
+            Value
           </label>
           <input
             type="text"
@@ -206,12 +236,45 @@ const RentalOwnerAdd: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-lg text-gray-700">Upload Image</label>
+          <label className="block text-lg text-gray-700">Upload Images (Max 5)</label>
           <input
             type="file"
+            multiple
             onChange={handleImageChange}
             className="mt-2 p-2 border-2 border-gray-300 rounded-lg"
+            disabled={images.length >= 5} // Disable input when 5 images are uploaded
           />
+          <div className="mt-2">
+            {images.length < 5 && (
+              <button
+                type="button"
+                onClick={() => document.getElementById('imageUpload')?.click()}
+                className="text-orange-600 hover:text-orange-800"
+              >
+                + Add More
+              </button>
+            )}
+            {images.length > 0 && (
+              <div className="flex mt-2 space-x-2">
+                {images.map((image, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`uploaded-image-${index}`}
+                      className="w-16 h-16 object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleImageRemove(index)}
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-6">

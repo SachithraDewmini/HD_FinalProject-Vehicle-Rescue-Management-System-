@@ -7,7 +7,9 @@ const MechanicAdd: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userId = location.state?.userId || localStorage.getItem("userId"); // Retrieve userId
+  const name = location.state?.name || localStorage.getItem("name"); // Retrieve name
 
+  const [selectedTable, setSelectedTable] = useState("mechanic"); // Selected table
   const [serviceName, setServiceName] = useState("");
   const [locationName, setLocationName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
@@ -36,7 +38,7 @@ const MechanicAdd: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!serviceName || !locationName || !contactNumber || !userId) {
+    if (!serviceName || !locationName || !contactNumber || !userId || !name) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -49,24 +51,48 @@ const MechanicAdd: React.FC = () => {
         vehicleType: Object.keys(vehicleType).filter((key) => vehicleType[key]),
         availability,
         image: image ? URL.createObjectURL(image) : null,
-        userId, // Ensure userId is saved
+        userId, // Save userId
+        userName: name, // Save user name
       };
 
-      await addDoc(collection(db, "mechanic"), mechanicData);
-      alert("Mechanic added successfully!");
+      await addDoc(collection(db, selectedTable), mechanicData);
+      alert(`${selectedTable} entry added successfully!`);
       navigate("/mview");
     } catch (error) {
-      console.error("Error adding mechanic:", error);
-      alert("Failed to add mechanic. Please try again.");
+      console.error(`Error adding ${selectedTable} entry:`, error);
+      alert(`Failed to add ${selectedTable} entry. Please try again.`);
     }
   };
 
   return (
     <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-xl">
-      <h2 className="text-3xl font-semibold text-orange-600 mb-6">Add Mechanic</h2>
+      <h2 className="text-3xl font-semibold text-orange-600 mb-6">
+        Add Mechanic or Feedback
+      </h2>
+
+      {/* Select Table */}
+      <div className="mb-4">
+        <label htmlFor="selectedTable" className="block text-lg text-gray-700">
+          Select Table
+        </label>
+        <select
+          id="selectedTable"
+          value={selectedTable}
+          onChange={(e) => setSelectedTable(e.target.value)}
+          className="w-full mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+        >
+          <option value="mechanic">Mechanic</option>
+          <option value="mechanicFeedbacks">Mechanic Feedbacks</option>
+          <option value="rentalownerFeedbacks">Rental Owner Feedbacks</option>
+          <option value="trollerFeedbacks">Troller Feedbacks</option>
+        </select>
+      </div>
+
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="serviceName" className="block text-lg text-gray-700">Service Name</label>
+          <label htmlFor="serviceName" className="block text-lg text-gray-700">
+            Service Name
+          </label>
           <input
             type="text"
             id="serviceName"
@@ -114,7 +140,9 @@ const MechanicAdd: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="location" className="block text-lg text-gray-700">Location</label>
+          <label htmlFor="location" className="block text-lg text-gray-700">
+            Location
+          </label>
           <input
             type="text"
             id="location"
@@ -126,7 +154,9 @@ const MechanicAdd: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="contactNumber" className="block text-lg text-gray-700">Contact Number</label>
+          <label htmlFor="contactNumber" className="block text-lg text-gray-700">
+            Contact Number
+          </label>
           <input
             type="text"
             id="contactNumber"
@@ -172,14 +202,24 @@ const MechanicAdd: React.FC = () => {
           />
         </div>
 
-        <div className="mt-6">
-          <button
-            type="submit"
-            className="w-full bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            Submit
-          </button>
-        </div>
+        <div className="mt-6 space-y-4">
+  <button
+    type="submit"
+    className="w-full bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+  >
+    Submit
+  </button>
+
+  {/* Back Button */}
+  <button
+    type="button"
+    onClick={() => navigate("/mview")}
+    className="w-full bg-gray-400 text-white py-3 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300"
+  >
+    Back
+  </button>
+</div>
+
       </form>
     </div>
   );

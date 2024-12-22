@@ -7,6 +7,7 @@ const TrollerAdd: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userId = location.state?.userId || localStorage.getItem("userId"); // Retrieve userId
+  const name = location.state?.name || localStorage.getItem("name");
 
   const [serviceName, setServiceName] = useState("");
   const [towingcapacity, setTowingcapacity] = useState("");
@@ -40,7 +41,8 @@ const TrollerAdd: React.FC = () => {
       !towingcapacity ||
       !value ||
       !locationName ||
-      !contactNumber ||
+      !contactNumber || 
+      !name||
       vehicleTypes.length === 0 || // Ensure at least one vehicle type is selected
       !userId
     ) {
@@ -59,6 +61,7 @@ const TrollerAdd: React.FC = () => {
         availability,
         image: image ? URL.createObjectURL(image) : null,
         userId, // Ensure userId is saved
+        userName: name,
       };
 
       await addDoc(collection(db, "troller"), trollerData);
