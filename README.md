@@ -88,13 +88,8 @@ Run the Application:!
 Web Application Screenshots : 
 
 
-
-
-
-
-
-
 ![Screenshot 2024-11-17 100318](https://github.com/user-attachments/assets/e32c1141-4ebd-4f55-b6e6-4752a7ecaa78)
+
 
 
 
@@ -146,4 +141,87 @@ Web Application Screenshots :
 
 
 ![Screenshot 2024-11-17 101051](https://github.com/user-attachments/assets/5e82beaa-5704-46cd-88c2-bc9be9b17004)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-12-23 115530](https://github.com/user-attachments/assets/b6a7a097-ab33-4c40-a61f-8aecf92a3151)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-12-23 115445](https://github.com/user-attachments/assets/c4f085ce-f6bd-41f2-9c37-08d02293eb4c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-12-23 122306](https://github.com/user-attachments/assets/1d462a14-ed97-4716-8119-32ddbbfd28ec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-12-23 120301](https://github.com/user-attachments/assets/f5d696f9-4d85-4d51-a406-2a5059abb194)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![Screenshot 2024-12-23 120324](https://github.com/user-attachments/assets/8bf9eba0-2774-4cce-99be-a840a4654cfc)
+
+
 
