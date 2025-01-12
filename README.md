@@ -79,7 +79,7 @@ npm install
 
 Run the Application:!
 
-- Web App: npm start
+- Web App: npm run dev
 - Mobile App: Open in Android Studio or run via react-native run-android.
 
 📌 Conclusion
