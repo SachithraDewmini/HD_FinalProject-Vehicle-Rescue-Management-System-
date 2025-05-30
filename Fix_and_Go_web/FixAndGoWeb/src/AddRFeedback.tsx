@@ -1,6 +1,6 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { db } from "./Firebaseconfig";
 
 const AddRFeedback: React.FC = () => {
@@ -56,6 +56,12 @@ const AddRFeedback: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-orange-100 via-orange-200 to-orange-300">
+      <Link
+                            to="/crview"
+                            className="self-start mb-4 ml-6 text-blue-700 hover:underline flex items-center"
+                          >
+                            ← Back
+                          </Link>
       <h1 className="text-4xl font-bold mb-6 text-gray-900">Add Feedback</h1>
       <form
         onSubmit={handleSubmit}
